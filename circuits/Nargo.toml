@@ -1,5 +1,5 @@
 [package]
-name = "smartdrop"
+name = "honkdrop"
 type = "bin"
 authors = [""]
 compiler_version = ">=0.30.0"

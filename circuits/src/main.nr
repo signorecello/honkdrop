@@ -14,7 +14,7 @@ comptime global G: Secp256k1 = BigCurve::one();
 fn main(
     pub_key: [u8; 64],
     signature: [u8; 64],
-    message: pub [u8; 10], // hello noir
+    message: [u8; 10], // hello noir
     message_hash: pub [u8; 32],
 
     c: [u8; 32],
@@ -30,8 +30,8 @@ fn main(
     claimer_priv: Field,
     claimer_pub: pub Field,
 ) {
-    let key = ecrecover::secp256k1::PubKey::from_unified(pub_key);
-    let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, message_hash);
+    // let key = ecrecover::secp256k1::PubKey::from_unified(pub_key);
+    // let address = ecrecover::ecrecover(key.pub_x, key.pub_y, signature, message_hash);
 
     let c: Secp256k1Fr = BigNum::from_be_bytes(c);
     let c: Secp256k1Scalar = ScalarField::from_bignum(c);
@@ -52,9 +52,9 @@ fn main(
     };
     let _ : (Secp256k1, Secp256k1) = plume_v2(message, c, s, pk, nullifier); 
 
-    let mt = MerkleTree::default(merkle_root, pedersen_hash);
-    mt.membership(address, index, merkle_path);
-    assert(claimer_priv == claimer_pub);
+    // let mt = MerkleTree::default(merkle_root, pedersen_hash);
+    // mt.membership(address, index, merkle_path);
+    // assert(claimer_priv == claimer_pub);
 }
 
 #[test]

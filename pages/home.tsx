@@ -17,57 +17,20 @@ export default function Home() {
 
   return (
     <MainLayout>
-      <Text
-        style={{
-          fontSize: 16,
-          fontWeight: '500',
-          marginBottom: 20,
-          textAlign: 'center',
-          color: '#6B7280',
-        }}>
-        This application shows you how to use Noir to generate ZK proofs
-        natively in iOS and Android with React Native.{'\n\n'}
-        Click on the button below to try out the demo and generate your first ZK
-        proof straight from your phone!
-      </Text>
       <View
         style={{
           gap: 20,
         }}>
         <Button
           onPress={() => {
-            navigation.navigate('ProductProof');
+            navigation.navigate('Plume');
           }}>
           <Text
             style={{
               color: 'white',
               fontWeight: '700',
             }}>
-            Proof of product
-          </Text>
-        </Button>
-        <Button
-          onPress={() => {
-            navigation.navigate('PedersenProof');
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: '700',
-            }}>
-            Proof of Pedersen Hash
-          </Text>
-        </Button>
-        <Button
-          onPress={() => {
-            navigation.navigate('Secp256r1Proof');
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              fontWeight: '700',
-            }}>
-            Proof of secp256r1
+            Plume
           </Text>
         </Button>
       </View>

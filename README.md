@@ -1,188 +1,52 @@
-# Noir React Native starter
+# HonkDrop
 
-## Description
+This app didn't make it to the end of EthGlobal Bangkok, given how tired its author was after the best Devcon ever. Lol.
 
-This is a simple React Native app showcasing how to use Noir in a mobile app (both for iOS and Android) to generate and verify proofs directly on mobile phones.
+Anyway, here's what I have.
 
-## Mobile proving
+## Did I hear "Drop"? AirDrop?
 
-### iOS
+That's right. But because you heard AirDrop doesn't mean you'll remain safe when claiming it.
 
-The app integrates with the [Swoir library](https://github.com/Swoir/Swoir) to generate proofs with Noir on iOS. The library is written in Swift and is available as a Swift Package.
+This app allows you to claim an airdrop for which you're eligible using a stealth address (A.K.A. a fresh account, not connected to the eligible account).
 
-### Android
+Because you can use any kind of key, you can literally airdrop tokens to EthGlobal's participants wearing the Arx Wristband. You can send a payload, get the `secp256r1` signature, and verify that signature inside the circuit without revealing its wearer.
 
-The app integrates with [noir_android](https://github.com/madztheo/noir_android), to generate proofs with Noir on Android. This library is written in Kotlin and Java and is loaded in the app with Jitpack in `android/app/build.gradle`.
+## Why is this such a big deal
 
-## General setup
+You see, I built this in a day. But it took thousands of engineering hours to get here.
 
-If you are unfamiliar with React Native, you can follow the [official guide](https://reactnative.dev/docs/environment-setup) to set up your environment.
+Totally worth it. You can use the same primitive to:
 
-For the rest follow the steps below:
+- create gated chatrooms without revealing identity
+- provide privacy and safety to children by using the wristband as identifier/payment method
+- of course airdrop tokens or POAPs to everyone that was present on a physical place without doxxing them
+- increase whistleblower's privacy and safety
+- you get the point by now
 
-1. Clone the repository
-2. Run `npm install` to install the dependencies
-3. [Optional] You can download the SRS to package it with the app binary and avoid fetching it from the server every time you generate a proof. Please refer to the section below on SRS download strategies.
+## What did you build on?
 
-## Setup on iOS
+From the hackathon? Aaaaaa... Nothing I think. But I was meant to be using:
 
-1. Run `npx pod-install` to install the pods for the iOS project
-2. Open the project in Xcode
-3. Make sure you see the `Swoir`, `SwoirCore` and `Swoirenberg` libraries in the `Package Dependencies` (if not please open an issue)
-4. Make sure you have a valid provisioning profile set up for the app in `Signing & Capabilities`
-5. Build & Run the app on your device
+- Arx: for the wristbands, this is where I started figuring out the idea
+- Stealthdrop: a famous app by 0xParc, which is NOT safe because ECDSA signatures are malleable and cannot be used as nullifiers
+- PLUME nullifiers: a solution to the above problem, designed by @Divide-By-0 et al, and that prompted quite some development from Aztec Labs, Distributed Labs, and other engineers, in order to generate a good, fast Noir implementation
+- Noir React Native: an amazing starter by @madztheo with a ton of primitives you can use to prove quickly on mobile phones using Noir
+- Noir: duh
+- EVM chains such as Gnosis (L1s) and Scroll (L2s), and I would also try the Bitcoin L2 despite being unsure if it could be deployed there (needs all the bn254 precompiles)
 
-## Setup on Android
+## What did you achieve?
 
-1. Connect your Android device and check it is connected by running `npm run android-devices`. It should display the connected device as `device` in the list of devices attached.
-2. Run `npm run android` to build and run the app on your device
+I'm actually proud, heh. The hardest part is DONE, namely getting the circuit written, and its inputs.
 
-**Note**: If you want to do a clean build, you can run `./scripts/clean-android.sh` before running `npm run android`
+I got stuck with React Native and XCode, and then it crashed with out of memory. I could certainly shave off a ton of gates on that circuit and make it work... but it's late, so late, and I'm so tired.
 
-## SRS download strategies
+Next steps would be to have the app build, change the circuits to use the `secp256r1` curve, start experimenting with the Arx tooling to get a signature out of the smart card, write the actual airdrop contract and deploy it, and build some nice frontend.
 
-The Structured Reference String (or SRS) contains the necessary data from the Universal Trusted Setup of Aztec to generate proofs with Noir (or more precisely the Barretenberg backend). So you will need it in the app. Here's how to go about it:
+Could I do it in a weekend, alone? Of course not. I was delusional.
 
-### You have 5 minutes and already know the circuits you want to use
+## Now what
 
-Then you should pre-download the SRS and package it with the app binary. You can do so by running the script `./scripts/download-srs.sh` that will help you do that in a single command. First, you will need to identify which of your circuits has the highest gate count, that is which one of them returns the biggest `Backend Circuit Size` when running `nargo info`. Once you have identified that said circuit, run the following command:
+This is actually quite valuable for the Noir community so I'll keep building over the next weekend with the goal to show some interesting usage of PLUME nullifiers.
 
-```bash
-./scripts/download-srs.sh path/to/your/circuit/target/<your_circuit_name>.json
-```
-
-This will download the SRS and package it into the app binary, and you'll be ready to go!
-
-**Why do I need to know the circuit with the highest gate count?**
-The SRS is the same for all circuits, so you only need to download it once. But you only need a fraction of it according to the size of the circuit you are using. So instead of downloading the whole SRS, which is over 300MB, you can download the chunk of the SRS that is needed to prove the biggest circuit you plan to use. This way you will have a much smaller SRS file to store (likely less than 50MB).
-
-**Note**: You can still download the SRS without specifying a circuit, just run `./scripts/download-srs.sh` without any argument. This will download the fraction of the SRS needed for a circuit of up to 512k constraints, which should be enough in most cases.
-
-### You don't know which circuits you will use for now and just want to try things out
-
-Then you can skip the process described above and the app will revert to fetching the SRS from Aztec's server. This is the default strategy used in the app. This approach will slow down the proof generation process, especially if you have a slow network connection. Also it is not recommended for production as you should not expect users to have a fast connection at all times and this may severely impact their data plan without them realizing it.
-
-## Usage
-
-### Setup the circuit
-
-Import your compiled circuit, the json file generated by `nargo compile`, as a regular json file in TypeScript on whichever page you want to use it.
-
-```typescript
-import circuit from './path/to/your/circuit/target/<your_circuit_name>.json';
-```
-
-Then before generating your first proof with it, make sure to setup the circuit by calling the `setupCircuit` function passing it the imported compiled circuit.
-
-```typescript
-import {Circuit} from '../types';
-import {setupCircuit} from '../lib/noir';
-
-const circuitId: string = await setupCircuit(circuit as Circuit);
-```
-
-It will return the `circuitId` (essentially the hash of the circuit), that identifies the circuit and which you will need to pass to the `generateProof` and `verifyProof` functions. You can keep it in a state variable or the context to use it later.
-
-When you are done with the circuit, you can discard it by calling the `clearCircuit` function passing it the `circuitId`.
-
-```typescript
-import {clearCircuit} from '../lib/noir';
-
-await clearCircuit(circuitId);
-```
-
-### Proving
-
-To generate a proof, call the `generateProof` function passing it the `circuitId`, the inputs and the type of proof you want to generate. Most type of inputs are supported such as integer, field, arrays and struct. The function will return the proof with the public inputs and the verification key of the circuit (needed for verification).
-
-```typescript
-import {generateProof} from '../lib/noir';
-
-// For UltraPlonk proofs
-const {proofWithPublicInputs, vkey} = await generateProof(
-  {
-    a: 5,
-    b: 7,
-    result: 35,
-  },
-  circuitId,
-  'plonk',
-);
-
-// For Honk proofs
-const {proofWithPublicInputs, vkey} = await generateProof(
-  {
-    a: 5,
-    b: 7,
-    result: 35,
-  },
-  circuitId,
-  'honk',
-);
-```
-
-### Remove the public inputs from the proof
-
-If you want only the proof, stripped of its public inputs, you can call the `extractProof` function passing it the proof with public inputs and the circuit. It will return just the proof (may not work as expected with Honk for now).
-
-```typescript
-import circuit from './path/to/your/circuit/target/<your_circuit_name>.json';
-import {Circuit} from '../types';
-import {extractProof} from '../lib/noir';
-
-const proof = extractProof(circuit as Circuit, proofWithPublicInputs);
-```
-
-### Verifying
-
-To verify a proof, call the `verifyProof` function passing it the `circuitId`, the proof, the verification key and the proof type. It will return a boolean indicating if the proof is valid or not.
-
-```typescript
-import {verifyProof} from '../lib/noir';
-
-// For UltraPlonk proofs
-const isValid = await verifyProof(
-  proofWithPublicInputs,
-  vkey,
-  circuitId,
-  'plonk',
-);
-
-// For Honk proofs
-const isValid = await verifyProof(
-  proofWithPublicInputs,
-  vkey,
-  circuitId,
-  'honk',
-);
-```
-
-**Note**: You can look at the different pages in the `pages` folder to see how it is used in the app more concretely.
-
-## How to replace the circuit
-
-This app comes with a basic Noir circuit checking that the prover knows two private inputs `a` and `b` such that the public input `result` is equal to their product `a * b`, a circuit verifying a secp256r1 signature and one doing multiple rounds of pedersen hashing. You can replace any of these circuits with your own by following these steps:
-
-1. Go into the `circuits` folder
-2. Create a new folder for your circuit such as `my_circuit`
-3. Create a `Nargo.toml` file in this folder following the structure of the `Nargo.toml` file in the other subfolders of the `circuits` folder. Don't forget to change the name of the circuit in the `name` field
-4. Create a `src` folder and create a `main.nr` file in it
-5. Make sure you have the version 0.36.0 of `nargo`. You can check by running `nargo --version`. If you have a different version, you can use `noirup -v 0.36.0`. And if you don't have `noirup` follow the instructions [here](https://noir-lang.org/docs/getting_started/installation/).
-6. Write your Noir code in `main.nr` and run `nargo check` to generate the `Prover.toml` and `Verifier.toml` files
-7. Run `nargo compile` to compile the circuit
-8. It will generate a new `<your_circuit_name>.json` file in `/target`
-9. You can then replace the import in the Javascript code to load this circuit instead
-
-## Note on performance
-
-Bear in mind that mobile phones have a limited amount of available RAM. The circuit used in this app is really simple so the memory usage is not a problem. However, if you plan to use more complex circuits, you should be aware that the memory usage will increase and may go above the available memory on the device causing the proof generation to fail.
-
-## A note on Honk
-
-While still a work of progress, Honk APIs are already exposed in Barretenberg and this app gives the ability to tap into it. You can switch between Honk and UltraPlonk (current proofs used by Noir) by specifying the `proofType` of the prove and verify functions. Specify `honk` to use Honk and `plonk` to use UltraPlonk. If not specified, the default is UltraPlonk.
-
-You will notice Honk is substantially faster than UltraPlonk, and uses less memory than UltraPlonk. However, it is still in development and there is no fully working on-chain verifier for it at the moment.
-
-## Latest supported version of Noir
-
-The latest supported version of Noir is 0.36.0
+Will I be using this? Totally. Come on, I can airdrop POAPs to everyone wearing a wristband, how cool is that?
