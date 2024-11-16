@@ -1,16 +1,17 @@
-import {hashMessage, fromHex, pad} from 'viem';
+import {fromHex, hashMessage, pad} from 'viem';
 import {privateKeyToAccount} from 'viem/accounts';
 import {LeanIMT} from '@zk-kit/lean-imt';
 import {BarretenbergSync, Fr} from '@aztec/bb.js';
-import {computeAllInputs} from '../lib/plume/src/index';
-import {
-  hexToUint8Array,
-  messageToUint8Array,
-} from '../lib/plume/src/utils/encoding';
+import {computeAllInputs, computeNullifer} from '../lib/plume/src/index';
+import {hexToUint8Array} from '../lib/plume/src/utils/encoding';
+import {getPublicKey} from '@noble/secp256k1';
 
 const PRIV_KEY = process.env.PRIV_KEY;
 const ADDRESS = pad('0x6DD27C84aAc0030E31c2E0cB9BD74777a88FcEa4');
-const message = 'hello noir';
+const messageString = 'hello noir';
+const message = Uint8Array.from([
+  104, 101, 108, 108, 111, 32, 110, 111, 105, 114,
+]);
 
 const siblings = [
   '0x00000000000000000000000088DE460bb35DB40d11eca314633319949EfBB2Ed',
@@ -32,35 +33,32 @@ const main = async () => {
 
   const account = privateKeyToAccount(`0x${PRIV_KEY}`);
   console.log('ADDRESS: ', account.address, ADDRESS);
-  const msgHash = hashMessage(message);
 
-  const signature = computeAllInputs(
-    messageToUint8Array(message),
-    hexToUint8Array(PRIV_KEY),
+  const sk = hexToUint8Array(PRIV_KEY as unknown as string);
+  const plume = computeAllInputs(message, sk);
+  const nullifier = computeNullifer(
+    plume.hashedToCurveR,
+    hexToUint8Array(plume.s),
   );
-
-  console.log(signature.plume.toHex());
-
-  const signatureBuffer = fromHex(
-    `0x${signature.plume.toHex()}` as `0x${string}`,
-    'bytes',
-  );
-
-  const frArray: Fr[] = Array.from(signatureBuffer).map(
-    byte => new Fr(BigInt(byte)),
-  );
-
-  const nullifier = bb.pedersenHash(frArray, 0);
+  const signature = await account.signMessage({message: messageString});
 
   console.log('PUB KEY: ', [...fromHex(account.publicKey, 'bytes').slice(1)]);
   console.log('SIGNATURE: ', [
-    ...fromHex(`0x${signature.plume.toHex()}` as `0x${string}`, 'bytes').slice(
-      0,
-      64,
-    ),
+    ...fromHex(signature as `0x${string}`, 'bytes').slice(0, 64),
   ]);
-  console.log('HASHED MESSAGE: ', [...fromHex(msgHash, 'bytes')]);
-  console.log('NULLIFIER: ', nullifier.toString());
+  console.log('MESSAGE: ', message);
+
+  const messageHash = hashMessage(messageString, 'bytes');
+  console.log('MESSAGE HASH: ', messageHash);
+  console.log('C:', hexToUint8Array(plume.c));
+  console.log('S:', hexToUint8Array(plume.s));
+
+  const pk = getPublicKey(sk);
+
+  console.log('PK X: ', pk.slice(0, 32));
+  console.log('PK Y: ', pk.slice(32, 64));
+  console.log('NULLIFIER X', hexToUint8Array(nullifier.toHex()).slice(0, 32));
+  console.log('NULLIFIER Y', hexToUint8Array(nullifier.toHex()).slice(32, 64));
 
   const hasher = (a: string, b: string) =>
     bb.pedersenHash([Fr.fromString(a), Fr.fromString(b)], 0).toString();
