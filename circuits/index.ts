@@ -8,8 +8,7 @@ import {
   messageToUint8Array,
 } from '../lib/plume/src/utils/encoding';
 
-const PRIV_KEY =
-  '1973b806f3b34ba5279aef4e5a5bd8efce422602b3a692f1a1377898b405db74';
+const PRIV_KEY = process.env.PRIV_KEY;
 const ADDRESS = pad('0x6DD27C84aAc0030E31c2E0cB9BD74777a88FcEa4');
 const message = 'hello noir';
 
