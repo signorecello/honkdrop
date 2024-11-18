@@ -1,24 +1,32 @@
 import {describe, test} from 'bun:test';
-import {UltraPlonkBackend} from '@aztec/bb.js';
+import {Barretenberg, UltraHonkBackend} from '@aztec/bb.js';
 import {CompiledCircuit, Noir} from '@noir-lang/noir_js';
-import circuit from '../circuits/target/honkdrop.json';
-import {prepareInputs} from '../circuits/prep';
+import circuit from '../circuits/honkdrop/target/honkdrop.json';
+import {prepareInputs} from '../circuits/honkdrop/prep';
 import {cpus} from 'os';
+import {createFileManager, compile} from '@noir-lang/noir_wasm';
+import {resolve, join} from 'path';
+
+// export async function compileCircuit(path = './circuits') {
+//   const basePath = resolve(join(path));
+//   const fm = createFileManager(basePath);
+//   const result = await compile(fm);
+//   if (!('program' in result)) {
+//     throw new Error('Compilation failed');
+//   }
+//   return result.program as CompiledCircuit;
+// }
 
 describe('Test', () => {
   test(async () => {
-    const backend = new UltraPlonkBackend(circuit.bytecode, {
-      threads: cpus.length,
-    });
+    // const circuit = await compileCircuit();
+    const backend = new UltraHonkBackend(circuit.bytecode);
     const noir = new Noir(circuit as CompiledCircuit);
 
     const inputs = await prepareInputs();
-    console.log(inputs);
 
     const {witness} = await noir.execute(inputs);
-    console.log(witness);
 
     const proof = await backend.generateProof(witness);
-    console.log(proof);
   });
 });

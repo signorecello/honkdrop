@@ -1,0 +1,11 @@
+# dependencies
+node_modules
+yarn.lock
+.yarn
+
+# github
+.github/ISSUE_TEMPLATE
+
+# misc
+.DS_Store
+*.pem
