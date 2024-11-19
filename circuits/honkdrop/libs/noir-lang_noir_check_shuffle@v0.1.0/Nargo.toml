@@ -1,7 +1,0 @@
-[package]
-name = "noir_check_shuffle"
-type = "lib"
-authors = [""]
-compiler_version = ">=0.32.0"
-
-[dependencies]

@@ -1,3 +1,0 @@
-{
-  "**/*.{js,json,md,nr,toml,yml,yaml}": "yarn fmt"
-}
