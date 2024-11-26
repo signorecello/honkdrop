@@ -1,4 +1,5 @@
 {
   "java.configuration.updateBuildConfiguration": "interactive",
-  "cmake.sourceDirectory": "/Users/zpedro/Documents/GitHub/ethglobal_bangkok/node_modules/react-native-reanimated/android"
+  "cmake.sourceDirectory": "/Users/zpedro/Documents/GitHub/ethglobal_bangkok/node_modules/react-native-reanimated/android",
+  "cSpell.words": ["biginteger"]
 }

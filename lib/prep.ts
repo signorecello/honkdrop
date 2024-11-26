@@ -33,7 +33,6 @@ export const prepareInputs = async () => {
   const bb = await BarretenbergSync.new();
 
   const account = privateKeyToAccount(`0x${PRIV_KEY}`);
-
   const sk = hexToUint8Array(PRIV_KEY as unknown as string);
   const plume = await computeAllInputs(message, sk);
   const nullifier = computeNullifer(
@@ -41,21 +40,32 @@ export const prepareInputs = async () => {
     hexToUint8Array(plume.s),
   );
   const signature = await account.signMessage({message: messageString});
-
   const messageHash = hashMessage(messageString, 'bytes');
-
   const pk = getPublicKey(sk);
 
   const hasher = (a: string, b: string) =>
     bb.poseidon2Hash([Fr.fromString(a), Fr.fromString(b)]).toString();
 
-  // To create an instance of a LeanIMT, you must provide the hash function.
-  const tree = new LeanIMT(hasher);
-  tree.insert(ADDRESS);
+  const eligibleTree = new LeanIMT(hasher);
+  const nullifierTree = new LeanIMT(hasher);
+  eligibleTree.insert(ADDRESS);
   for (let leaf of siblings) {
-    tree.insert(leaf);
+    eligibleTree.insert(leaf);
+    // adding some stuff to the nullifier tree
+    nullifierTree.insert(bb.poseidon2Hash([Fr.fromString(leaf)]).toString());
   }
-  const mtProof = tree.generateProof(0);
+
+  const eligibleMtProof = eligibleTree.generateProof(0);
+  const oldNullifierRoot = nullifierTree.root;
+
+  nullifierTree.insert(`0x${(nullifier.x % Fr.MODULUS).toString(16)}`);
+  const nullifierMtProof = nullifierTree.generateProof(nullifierTree.size - 1);
+  const nullifierPath = new Array(nullifierTree.depth)
+    .fill(pad('0x00'))
+    .map(
+      (value, index) =>
+        (nullifierMtProof.siblings[index] as `0x${string}`) || pad('0x00'),
+    );
 
   const inputs = {
     pub_key: [...fromHex(account.publicKey, 'bytes').slice(1)],
@@ -73,25 +83,25 @@ export const prepareInputs = async () => {
     nullifier_y: [
       ...fromHex(nullifier.toHex() as `0x${string}`, 'bytes'),
     ].slice(32, 64),
+    eligible_root: eligibleMtProof.root as `0x${string}`,
+    eligible_path: eligibleMtProof.siblings.map(s => s as `0x${string}`),
+    eligible_index: eligibleMtProof.index,
+    nullifier_root: oldNullifierRoot as `0x${string}`,
+    nullifier_path: nullifierPath,
+    nullifier_index: nullifierTree.size - 1,
 
-    merkle_path: mtProof.siblings.map(s => [
-      ...fromHex(s as `0x${string}`, 'bytes'),
-    ]),
-    index: mtProof.index,
-    merkle_root: [...fromHex(mtProof.root as `0x${string}`, 'bytes')],
-    claimer_priv: [
-      ...fromHex(pad('0x8aEC1f81CB90204e3C9Aa1Aeed2915C181CbBe28'), 'bytes'),
-    ],
-    claimer_pub: [
-      ...fromHex(pad('0x8aEC1f81CB90204e3C9Aa1Aeed2915C181CbBe28'), 'bytes'),
-    ],
+    claimer_priv: pad('0x8aEC1f81CB90204e3C9Aa1Aeed2915C181CbBe28'),
+
+    claimer_pub: pad('0x8aEC1f81CB90204e3C9Aa1Aeed2915C181CbBe28'),
+
+    return: nullifierMtProof.root as `0x${string}`,
   };
 
-  console.log(mtProof.siblings);
-  console.log(mtProof.root);
   writeFileSync('./lib/inputs.json', JSON.stringify(inputs));
   return inputs;
 };
+
+prepareInputs();
 
 // if (process.argv[1]) {
 //   prepareInputs();

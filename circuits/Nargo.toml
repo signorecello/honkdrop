@@ -1,0 +1,12 @@
+[package]
+name = "honkdrop"
+type = "bin"
+authors = [""]
+compiler_version = ">=0.30.0"
+
+[dependencies]
+trees = { git = "https://github.com/privacy-scaling-explorations/zk-kit.noir", tag = "main", directory = "packages/merkle-trees" }
+ecrecover = { tag = "main", git = "https://github.com/signorecello/ecrecover-noir" }
+plume = { tag = "zpedro/poseidon", git = "https://github.com/signorecello/noir-plume", directory = "crates/plume" }
+noir_bigcurve = { tag = "zpedro/v0.4.2", git = "https://github.com/noir-lang/noir_bigcurve" }
+bignum = { tag = "v0.4.2", git = "https://github.com/noir-lang/noir-bignum" }

@@ -8,15 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* HonkDropTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HonkDropTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-HonkDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-HonkDrop.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		30824C7FA6D34A227C00226C /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 6EA6CE147429926A9ABA7539 /* PrivacyInfo.xcprivacy */; };
 		7699B88040F8A987B510C191 /* libPods-HonkDrop-HonkDropTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-HonkDrop-HonkDropTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C22D46782C4ABF340020284A /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C22D46772C4ABF340020284A /* Swoir */; };
-		C22D467B2C4AC2370020284A /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C22D467A2C4AC2370020284A /* Swoir */; };
 		C22D46842C4EC04A0020284A /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C22D46832C4EC04A0020284A /* Swoir */; };
 		C22D46862C4EE1DF0020284A /* srs.local in Resources */ = {isa = PBXBuildFile; fileRef = C22D46852C4EE1DF0020284A /* srs.local */; };
 		C22D46892C4EED1B0020284A /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C22D46882C4EED1B0020284A /* Swoir */; };
@@ -28,15 +25,14 @@
 		C273AF502B86595200991B29 /* NoirModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = C273AF4E2B86595200991B29 /* NoirModule.swift */; };
 		C273AF522B8659EF00991B29 /* NoirModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C273AF512B8659EF00991B29 /* NoirModule.m */; };
 		C273AF532B8659EF00991B29 /* NoirModule.m in Sources */ = {isa = PBXBuildFile; fileRef = C273AF512B8659EF00991B29 /* NoirModule.m */; };
-		C29729412C4A8A9700730A3D /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C29729402C4A8A9700730A3D /* Swoir */; };
 		C2E2EA402C35FA2A00078AAB /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E2EA3F2C35FA2A00078AAB /* Swoir */; };
 		C2E2EA462C3C17AD00078AAB /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E2EA452C3C17AD00078AAB /* Swoir */; };
 		C2E2EA4C2C3C34D400078AAB /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E2EA4B2C3C34D400078AAB /* Swoir */; };
 		C2E2EA522C3FAA5E00078AAB /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E2EA512C3FAA5E00078AAB /* Swoir */; };
 		C2E2EA6F2C46673800078AAB /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E2EA6E2C46673800078AAB /* Swoir */; };
 		C2E55DB22C49301500FADAF5 /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E55DB12C49301500FADAF5 /* Swoir */; };
-		C2E55DB52C49760100FADAF5 /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E55DB42C49760100FADAF5 /* Swoir */; };
 		C2E55DB82C49885200FADAF5 /* Swoir in Frameworks */ = {isa = PBXBuildFile; productRef = C2E55DB72C49885200FADAF5 /* Swoir */; };
+		E03E8FB5F9E45F6B3B9D335A /* libPods-HonkDrop.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-HonkDrop.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,14 +84,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C29729412C4A8A9700730A3D /* Swoir in Frameworks */,
-				C2E55DB52C49760100FADAF5 /* Swoir in Frameworks */,
-				C22D46782C4ABF340020284A /* Swoir in Frameworks */,
-				C22D467B2C4AC2370020284A /* Swoir in Frameworks */,
 				C2E2EA402C35FA2A00078AAB /* Swoir in Frameworks */,
 				C2E55DB22C49301500FADAF5 /* Swoir in Frameworks */,
 				C2E2EA462C3C17AD00078AAB /* Swoir in Frameworks */,
-				0C80B921A6F3F58F76C31292 /* libPods-HonkDrop.a in Frameworks */,
 				C2E2EA6F2C46673800078AAB /* Swoir in Frameworks */,
 				C25F7E3F2C9EC31F00485C6E /* Swoir in Frameworks */,
 				C22D46892C4EED1B0020284A /* Swoir in Frameworks */,
@@ -106,6 +97,7 @@
 				C2E2EA4C2C3C34D400078AAB /* Swoir in Frameworks */,
 				C25F7E3C2C9EB72700485C6E /* Swoir in Frameworks */,
 				C2E55DB82C49885200FADAF5 /* Swoir in Frameworks */,
+				E03E8FB5F9E45F6B3B9D335A /* libPods-HonkDrop.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,12 +241,8 @@
 				C2E2EA512C3FAA5E00078AAB /* Swoir */,
 				C2E2EA6E2C46673800078AAB /* Swoir */,
 				C2E55DB12C49301500FADAF5 /* Swoir */,
-				C2E55DB42C49760100FADAF5 /* Swoir */,
 				C2E55DB72C49885200FADAF5 /* Swoir */,
-				C29729402C4A8A9700730A3D /* Swoir */,
 				C2336E5C2C4A9CB800731D87 /* Swoir */,
-				C22D46772C4ABF340020284A /* Swoir */,
-				C22D467A2C4AC2370020284A /* Swoir */,
 				C22D46832C4EC04A0020284A /* Swoir */,
 				C22D46882C4EED1B0020284A /* Swoir */,
 				C25F7E3B2C9EB72700485C6E /* Swoir */,
@@ -562,9 +550,9 @@
 				DEVELOPMENT_TEAM = 2LN23FVYB5;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = HonkDrop/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Noir React Native";
+				INFOPLIST_KEY_CFBundleDisplayName = HonkDrop;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -603,9 +591,9 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2LN23FVYB5;
 				INFOPLIST_FILE = HonkDrop/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Noir React Native";
+				INFOPLIST_KEY_CFBundleDisplayName = HonkDrop;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -682,7 +670,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD = "";
 				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -756,7 +744,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.6;
 				LD = "";
 				LDPLUSPLUS = "";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -824,20 +812,12 @@
 			repositoryURL = "https://github.com/Swoir/Swoir";
 			requirement = {
 				kind = exactVersion;
-				version = "0.36.0-1";
+				version = "0.36.0-5";
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		C22D46772C4ABF340020284A /* Swoir */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Swoir;
-		};
-		C22D467A2C4AC2370020284A /* Swoir */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Swoir;
-		};
 		C22D46832C4EC04A0020284A /* Swoir */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Swoir;
@@ -863,10 +843,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = Swoir;
 		};
-		C29729402C4A8A9700730A3D /* Swoir */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Swoir;
-		};
 		C2E2EA3F2C35FA2A00078AAB /* Swoir */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Swoir;
@@ -888,10 +864,6 @@
 			productName = Swoir;
 		};
 		C2E55DB12C49301500FADAF5 /* Swoir */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = Swoir;
-		};
-		C2E55DB42C49760100FADAF5 /* Swoir */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Swoir;
 		};

@@ -1,3 +1,4 @@
+/* eslint-disable no-void */
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect, useState} from 'react';
 import {View, Text, Share, Alert, StyleSheet} from 'react-native';
@@ -12,10 +13,15 @@ import {
 } from '../lib/noir';
 // Get the circuit to load for the proof generation
 // Feel free to replace this with your own circuit
-import circuit from '../circuits/honkdrop/target/honkdrop.json';
+import circuit from '../circuits/target/honkdrop.json';
 import inputs from '../lib/inputs.json';
 import {formatProof} from '../lib';
 import {Circuit} from '../types';
+import * as WebAssembly from 'react-native-webassembly';
+// import {serializeBufferable} from '../lib/bb/api';
+import {Fr} from '../lib/bb/types/fields';
+
+// const wasmPath = require('./barretenberg.wasm');
 
 export default function Secp256r1Proof() {
   const [proofAndInputs, setProofAndInputs] = useState('');
@@ -25,10 +31,35 @@ export default function Secp256r1Proof() {
   const [verifyingProof, setVerifyingProof] = useState(false);
   const [provingTime, setProvingTime] = useState(0);
   const [circuitId, setCircuitId] = useState<string>();
+  // const [poseidon2, setPoseidon2] = useState<any>();
+
+  // function hash(): Uint8Array {
+  //   // const inArgs = [inputsBuffer].map(serializeBufferable);
+  //   const outTypes = [Fr];
+
+  //   const result = poseidon2([1, 2], outTypes);
+  //   return result;
+  // }
+
+  // useEffect(
+  //   () =>
+  //     void (async () => {
+  //       console.log('BB bb', wasmPath);
+  //       const response = await fetch(wasmPath);
+  //       const bytes = await response.arrayBuffer();
+
+  //       // Instantiate the WebAssembly module
+  //       const localModule = await WebAssembly.instantiate(bytes);
+  //       console.log('localModule', localModule);
+  //       // setPoseidon2(localModule);
+  //       // hash();
+  //     })(),
+  // );
 
   useEffect(() => {
     // First call this function to load the circuit and setup the SRS for it
     // Keep the id returned by this function as it is used to identify the circuit
+    console.log(inputs);
     setupCircuit(circuit as Circuit).then(id => setCircuitId(id));
     return () => {
       if (circuitId) {
